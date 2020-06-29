@@ -10,8 +10,3 @@ interface AnalyticsIntegration {
     fun onEvent(name: String, bundle: Bundle?)
     fun onUserProfile(name: String, value: String)
 }
-
-enum class AvailabilityState {
-    Available,
-    Unavailable
-}
