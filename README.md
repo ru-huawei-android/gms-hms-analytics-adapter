@@ -24,15 +24,19 @@ Signatures:
 *fun init(context: Context, APIs: Set<String> = getSupportedAPIs())*
 
 *fun getSupportedAPIs(): Set<String>*
-Implemented analytics integrations static list (FirebaseAnalytics and HuaweiAnalytics by now)
+
+Implemented analytics integrations static set (FirebaseAnalytics and HuaweiAnalytics by now)
 
 *fun getDeviceAPIs(): Set<String>*
-List of on-device (emulator) services available for interaction (depends on GMS/HMS presents on device)
+
+Set of on-device (emulator) services available for interaction (depends on GMS/HMS presents on device)
 
 *fun onEvent(eventName: String, bundle: Bundle?, APIs: Set<String> = getDeviceAPIs())*
+
 Custom/Build-in event sending to available analytics. 
 Third parameter is optional, in case developer doesn't use it, it filled with available integration ids.
 
 *fun setUserProperty(name: String, value: String, APIs: Set<String> = getDeviceAPIs())*
+
 UserProfile/UserProperty setting. 
 Third parameter is optional, in case developer doesn't use it, it filled with available integration ids.
