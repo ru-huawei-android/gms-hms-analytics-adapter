@@ -20,6 +20,7 @@ e.g. FirebaseAnalytics.Event.ADD_PAYMENT_INFO becomes HAEventType.CREATEPAYMENTI
 **Library automatically detects avalable analytics API on device, initializes it and send events and profile to both GA and HA**
 
 Signatures:
+
 *fun init(context: Context, APIs: Set<String> = getSupportedAPIs())*
 
 *fun getSupportedAPIs(): Set<String>*
