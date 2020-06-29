@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 /app/release
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/
