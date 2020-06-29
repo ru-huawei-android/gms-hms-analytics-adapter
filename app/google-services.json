@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "939138938840",
+    "firebase_url": "https://analyticssandbox-587fa.firebaseio.com",
+    "project_id": "analyticssandbox-587fa",
+    "storage_bucket": "analyticssandbox-587fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939138938840:android:1876b537c70fea921964ad",
+        "android_client_info": {
+          "package_name": "com.huawei.adapter.analytics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939138938840-cqlmmmndtpostac29tu7ckb871voe5fi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huawei.adapter.analytics",
+            "certificate_hash": "7538e1d775b680b664e29a58f81221f3ffd4752c"
+          }
+        },
+        {
+          "client_id": "939138938840-ji59lqgm1vk8fp9miqatesv9qbfjo532.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVYb19px8jn1ekHL8LYqrT-fpr2-iLGYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939138938840-ji59lqgm1vk8fp9miqatesv9qbfjo532.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
