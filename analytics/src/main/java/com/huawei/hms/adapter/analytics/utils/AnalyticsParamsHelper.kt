@@ -1,4 +1,4 @@
-package com.huawei.hms.adapter.analytics
+package com.huawei.hms.adapter.analytics.utils
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event.*

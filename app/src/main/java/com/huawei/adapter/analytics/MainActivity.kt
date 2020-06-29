@@ -14,6 +14,12 @@ class MainActivity : AppCompatActivity() {
 
         ComposedAnalytics.init(this@MainActivity)
 
+        val availableSDKs = ComposedAnalytics.getSupportedAPIs().toString()
+        val availableAPIs = ComposedAnalytics.getDeviceAPIs().toString()
+
+        availableSDK.text = getString(R.string.available_analytics_sdks, availableSDKs)
+        availableAPI.text = getString(R.string.available_on_device_apis, availableAPIs)
+
         customEvent.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("customField1", "Hello")

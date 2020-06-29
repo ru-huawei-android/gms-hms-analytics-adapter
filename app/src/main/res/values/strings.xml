@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AnalyticsAdapter</string>
+    <string name="available_analytics_sdks">Available analytics SDKs: %1$s</string>
+    <string name="available_on_device_apis">Available on device APIs: %1$s</string>
 </resources>
