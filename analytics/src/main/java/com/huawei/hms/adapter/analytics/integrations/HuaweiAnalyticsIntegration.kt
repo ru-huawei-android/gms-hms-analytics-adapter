@@ -3,8 +3,8 @@ package com.huawei.hms.adapter.analytics.integrations
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.huawei.hms.adapter.analytics.GMS2HMSEvents
-import com.huawei.hms.adapter.analytics.GMS2HMSParams
+import com.huawei.hms.adapter.analytics.utils.GMS2HMSEvents
+import com.huawei.hms.adapter.analytics.utils.GMS2HMSParams
 import com.huawei.hms.adapter.analytics.TAG
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
@@ -12,13 +12,16 @@ import com.huawei.hms.analytics.HiAnalyticsTools
 import com.huawei.hms.api.ConnectionResult
 import com.huawei.hms.api.HuaweiApiAvailability
 
-class HiAnalyticsIntegration : AnalyticsIntegration {
+class HuaweiAnalyticsIntegration : AnalyticsIntegration {
+
+    override val integrationId: String
+        get() = id
 
     private lateinit var hiAnalyticsInstance: HiAnalyticsInstance
     private var isStarted = false
 
     override fun init(context: Context) {
-        if (isAvailable(context)) {
+        if (isApiAvailable(context)) {
             HiAnalyticsTools.enableLog()
             hiAnalyticsInstance = HiAnalytics.getInstance(context)
             Log.i(TAG, "HiAnalytics was successfully started")
@@ -28,8 +31,6 @@ class HiAnalyticsIntegration : AnalyticsIntegration {
             isStarted = false
         }
     }
-
-    override fun getId() = id
 
     override fun isStarted() = isStarted
 
@@ -59,9 +60,9 @@ class HiAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    private fun isAvailable(context: Context) = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
+    override fun isApiAvailable(context: Context) = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
 
-    fun processParameter(bundle: Bundle, newBundle: Bundle, key: String?, newKey: String?) {
+    private fun processParameter(bundle: Bundle, newBundle: Bundle, key: String?, newKey: String?) {
         when (val value = bundle.get(key)) {
             is Int -> newBundle.putInt(newKey, value)
             is Long -> newBundle.putLong(newKey, value)
@@ -73,7 +74,7 @@ class HiAnalyticsIntegration : AnalyticsIntegration {
     }
 
     companion object {
-        val id = "HiAnalytics"
+        const val id = "HiAnalytics"
     }
 
 }

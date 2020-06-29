@@ -3,27 +3,51 @@ package com.huawei.hms.adapter.analytics
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.huawei.hms.adapter.analytics.integrations.AnalyticsIntegration
 import com.huawei.hms.adapter.analytics.integrations.FirebaseAnalyticsIntegration
-import com.huawei.hms.adapter.analytics.integrations.HiAnalyticsIntegration
+import com.huawei.hms.adapter.analytics.integrations.HuaweiAnalyticsIntegration
 
 const val TAG = "AnalyticsAdapter"
 
 object ComposedAnalytics : AnalyticsAdapter {
     private var wasServiceStarted = false
 
-    private val integrations = arrayOf(HiAnalyticsIntegration(), FirebaseAnalyticsIntegration())
-    private val integrationMap = mapOf(
-        HiAnalyticsIntegration.id to integrations[0],
+    private val integrations = arrayOf(HuaweiAnalyticsIntegration(), FirebaseAnalyticsIntegration())
+
+    private val defaultIntegrationMap = mapOf(
+        HuaweiAnalyticsIntegration.id to integrations[0],
         FirebaseAnalyticsIntegration.id to integrations[1]
     )
 
-    override fun getSupportedIntegrations() = integrationMap.keys
+    private var availableIntegrations = mutableMapOf<String, AnalyticsIntegration>()
+
+    override fun getSupportedAPIs() = defaultIntegrationMap.keys
+
+    override fun getDeviceAPIs(): Set<String> {
+        if (!wasServiceStarted) {
+            Log.e(TAG, "AnalyticsAdapter was not properly initialized, call init() before")
+            return emptySet()
+        }
+
+        return availableIntegrations.map { it.key }.toSet()
+    }
 
     override fun init(context: Context, integrationIds: Set<String>) {
-        Log.d(TAG, "Adapter initialization has been started...")
+        if (wasServiceStarted) {
+            Log.e(TAG, "Adapter was started previously, skipping action...")
+            return
+        }
+
+        Log.i(TAG, "Adapter initialization has been started...")
         integrations.filter { integrationIds.contains(it.getId()) }.forEach {
             if (integrationIds.contains(it.getId())) {
                 it.init(context)
+                if (it.isStarted()) {
+                    availableIntegrations[it.getId()] = it
+                    Log.i(TAG, "${it.getId()} integration successfully launched")
+                } else {
+                    Log.e(TAG, "couldn't start ${it.getId()} integration")
+                }
             }
         }
         wasServiceStarted = true
@@ -36,7 +60,7 @@ object ComposedAnalytics : AnalyticsAdapter {
         }
 
         integrationIds.forEach { integrationName ->
-            integrationMap[integrationName].let { integration ->
+            defaultIntegrationMap[integrationName].let { integration ->
                 if (integration == null || !integration.isStarted()) {
                     Log.e(TAG, "$integrationName event was requested, but not started, check service availability")
                 } else {
@@ -53,7 +77,7 @@ object ComposedAnalytics : AnalyticsAdapter {
         }
 
         integrationIds.forEach { integrationName ->
-            integrationMap[integrationName].let { integration ->
+            defaultIntegrationMap[integrationName].let { integration ->
                 if (integration == null || !integration.isStarted()) {
                     Log.e(TAG, "$integrationName userProfile was requested, but not started, check service availability")
                 } else {
@@ -65,9 +89,10 @@ object ComposedAnalytics : AnalyticsAdapter {
 }
 
 interface AnalyticsAdapter {
-    fun getSupportedIntegrations(): Set<String>
+    fun getSupportedAPIs(): Set<String>
+    fun getDeviceAPIs(): Set<String>
 
-    fun init(context: Context, integrationIds: Set<String> = getSupportedIntegrations())
-    fun onEvent(eventName: String, bundle: Bundle?, integrationIds: Set<String> = getSupportedIntegrations())
-    fun setUserProperty(name: String, value: String, integrationIds: Set<String> = getSupportedIntegrations())
+    fun init(context: Context, integrationIds: Set<String> = getSupportedAPIs())
+    fun onEvent(eventName: String, bundle: Bundle?, integrationIds: Set<String> = getDeviceAPIs())
+    fun setUserProperty(name: String, value: String, integrationIds: Set<String> = getDeviceAPIs())
 }
