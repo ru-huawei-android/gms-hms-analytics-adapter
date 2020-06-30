@@ -32,15 +32,15 @@ object ComposedAnalytics : AnalyticsAdapter {
         return availableIntegrations.map { it.key }.toSet()
     }
 
-    override fun init(context: Context, integrationIds: Set<String>) {
+    override fun init(context: Context, APIs: Set<String>) {
         if (wasServiceStarted) {
             Log.e(TAG, "Adapter was started previously, skipping action...")
             return
         }
 
         Log.i(TAG, "Adapter initialization has been started...")
-        integrations.filter { integrationIds.contains(it.getId()) }.forEach {
-            if (integrationIds.contains(it.getId())) {
+        integrations.filter { APIs.contains(it.getId()) }.forEach {
+            if (APIs.contains(it.getId())) {
                 it.init(context)
                 if (it.isStarted()) {
                     availableIntegrations[it.getId()] = it
@@ -53,13 +53,13 @@ object ComposedAnalytics : AnalyticsAdapter {
         wasServiceStarted = true
     }
 
-    override fun onEvent(eventName: String, bundle: Bundle?, integrationIds: Set<String>) {
+    override fun onEvent(eventName: String, bundle: Bundle?, APIs: Set<String>) {
         if (!wasServiceStarted) {
             Log.e(TAG, "AnalyticsAdapter was not properly initialized, call init() before")
             return
         }
 
-        integrationIds.forEach { integrationName ->
+        APIs.forEach { integrationName ->
             defaultIntegrationMap[integrationName].let { integration ->
                 if (integration == null || !integration.isStarted()) {
                     Log.e(TAG, "$integrationName event was requested, but not started, check service availability")
@@ -70,13 +70,13 @@ object ComposedAnalytics : AnalyticsAdapter {
         }
     }
 
-    override fun setUserProperty(name: String, value: String, integrationIds: Set<String>) {
+    override fun setUserProperty(name: String, value: String, APIs: Set<String>) {
         if (!wasServiceStarted) {
             Log.e(TAG, "AnalyticsAdapter was not properly initialized, call init() before")
             return
         }
 
-        integrationIds.forEach { integrationName ->
+        APIs.forEach { integrationName ->
             defaultIntegrationMap[integrationName].let { integration ->
                 if (integration == null || !integration.isStarted()) {
                     Log.e(TAG, "$integrationName userProfile was requested, but not started, check service availability")
@@ -89,10 +89,11 @@ object ComposedAnalytics : AnalyticsAdapter {
 }
 
 interface AnalyticsAdapter {
+    fun init(context: Context, APIs: Set<String> = getSupportedAPIs())
+
     fun getSupportedAPIs(): Set<String>
     fun getDeviceAPIs(): Set<String>
 
-    fun init(context: Context, integrationIds: Set<String> = getSupportedAPIs())
-    fun onEvent(eventName: String, bundle: Bundle?, integrationIds: Set<String> = getDeviceAPIs())
-    fun setUserProperty(name: String, value: String, integrationIds: Set<String> = getDeviceAPIs())
+    fun onEvent(eventName: String, bundle: Bundle?, APIs: Set<String> = getDeviceAPIs())
+    fun setUserProperty(name: String, value: String, APIs: Set<String> = getDeviceAPIs())
 }
