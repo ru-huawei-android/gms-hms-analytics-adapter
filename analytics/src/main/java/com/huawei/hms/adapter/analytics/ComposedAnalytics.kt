@@ -64,7 +64,7 @@ object ComposedAnalytics : AnalyticsAdapter {
                 if (integration == null || !integration.isStarted()) {
                     Log.e(TAG, "$integrationName event was requested, but not started, check service availability")
                 } else {
-                    integration.onEvent(eventName, bundle)
+                    integration.logEvent(eventName, bundle)
                 }
             }
         }

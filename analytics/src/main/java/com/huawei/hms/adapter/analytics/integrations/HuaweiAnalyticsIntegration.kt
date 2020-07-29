@@ -3,9 +3,8 @@ package com.huawei.hms.adapter.analytics.integrations
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.huawei.hms.adapter.analytics.utils.GMS2HMSEvents
-import com.huawei.hms.adapter.analytics.utils.GMS2HMSParams
 import com.huawei.hms.adapter.analytics.TAG
+import com.huawei.hms.adapter.analytics.utils.*
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
 import com.huawei.hms.analytics.HiAnalyticsTools
@@ -34,19 +33,20 @@ class HuaweiAnalyticsIntegration : AnalyticsIntegration {
 
     override fun isStarted() = isStarted
 
-    override fun onEvent(name: String, bundle: Bundle?) {
-        val mappedHMSEvent = GMS2HMSEvents[name]
-        if (mappedHMSEvent != null) {
+    override fun logEvent(name: String, bundle: Bundle?) {
+        val hmsEventName = eventsMap[name]
+        if (hmsEventName != null) {
             val newBundle = Bundle()
             bundle?.keySet()?.forEach { key ->
-                val hmsParamName = GMS2HMSParams[key]
+                val hmsParamName = substitute(name, hmsEventName)
                 if (hmsParamName != null) {
                     processParameter(bundle, newBundle, key, hmsParamName)
                 } else {
                     Log.e(TAG, "can't map $key parameter to HMS analogue")
                 }
             }
-            hiAnalyticsInstance.onEvent(mappedHMSEvent, newBundle)
+            addMandatoryParams(hmsEventName, newBundle)
+            hiAnalyticsInstance.onEvent(hmsEventName, newBundle)
         } else {
             hiAnalyticsInstance.onEvent(name, bundle)
         }
@@ -61,17 +61,6 @@ class HuaweiAnalyticsIntegration : AnalyticsIntegration {
     }
 
     override fun isApiAvailable(context: Context) = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
-
-    private fun processParameter(bundle: Bundle, newBundle: Bundle, key: String?, newKey: String?) {
-        when (val value = bundle.get(key)) {
-            is Int -> newBundle.putInt(newKey, value)
-            is Long -> newBundle.putLong(newKey, value)
-            is String -> newBundle.putString(newKey, value)
-            is Byte -> newBundle.putByte(newKey, value)
-            is Char -> newBundle.putChar(newKey, value)
-            is Boolean -> newBundle.putBoolean(newKey, value)
-        }
-    }
 
     companion object {
         const val id = "HiAnalytics"

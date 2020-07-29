@@ -30,7 +30,7 @@ class FirebaseAnalyticsIntegration : AnalyticsIntegration {
 
     override fun isStarted() = isStarted
 
-    override fun onEvent(name: String, bundle: Bundle?) {
+    override fun logEvent(name: String, bundle: Bundle?) {
         firebaseAnalytics.logEvent(name, bundle)
     }
 

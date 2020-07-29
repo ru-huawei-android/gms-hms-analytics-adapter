@@ -12,6 +12,6 @@ interface AnalyticsIntegration {
     fun isApiAvailable(context: Context): Boolean
 
     fun isStarted(): Boolean
-    fun onEvent(name: String, bundle: Bundle?)
+    fun logEvent(name: String, bundle: Bundle?)
     fun onUserProfile(name: String, value: String)
 }
