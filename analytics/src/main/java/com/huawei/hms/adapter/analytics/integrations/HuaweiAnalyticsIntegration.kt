@@ -3,7 +3,10 @@ package com.huawei.hms.adapter.analytics.integrations
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.huawei.hms.adapter.analytics.utils.*
+import com.huawei.hms.adapter.analytics.utils.addMandatoryParams
+import com.huawei.hms.adapter.analytics.utils.gmsToHmsEventMap
+import com.huawei.hms.adapter.analytics.utils.processParameter
+import com.huawei.hms.adapter.analytics.utils.transformGmsToHmsParameters
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
 import com.huawei.hms.analytics.HiAnalyticsTools
@@ -58,14 +61,17 @@ internal class HuaweiAnalyticsIntegration : AnalyticsIntegration {
 
     override fun isApiAvailable(context: Context): Boolean {
         val instance = HuaweiApiAvailability.getInstance()
-        if (instance.isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS) {
+        return if (instance.isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS) {
             val packageInfo = context.packageManager.getPackageInfo("com.huawei.hwid", 0)
             if (packageInfo.versionCode > 40004000) { //longVersionCode для API Level 28
+                true
+            } else {
                 Log.e(TAG, "Old HMS Core detected, please update it to 5.x version")
-                return false
+                false
             }
+        } else {
+            false
         }
-        return instance.isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
     }
 
     companion object {
