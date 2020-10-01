@@ -1,4 +1,3 @@
-include ':location-adapter'
 include ':analytics'
 include ':app'
 rootProject.name = "AnalyticsAdapter"
