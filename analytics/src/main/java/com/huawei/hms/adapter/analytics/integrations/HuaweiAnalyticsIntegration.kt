@@ -11,13 +11,10 @@ import com.huawei.hms.analytics.HiAnalyticsTools
 import com.huawei.hms.api.ConnectionResult
 import com.huawei.hms.api.HuaweiApiAvailability
 
-class HuaweiAnalyticsIntegration : AnalyticsIntegration {
-
-    override val integrationId: String
-        get() = id
+internal class HuaweiAnalyticsIntegration : AnalyticsIntegration {
 
     private lateinit var hiAnalyticsInstance: HiAnalyticsInstance
-    private var isStarted = false
+    override var isStarted = false
 
     override fun init(context: Context) {
         if (isApiAvailable(context)) {
@@ -31,14 +28,12 @@ class HuaweiAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    override fun isStarted() = isStarted
-
     override fun logEvent(name: String, bundle: Bundle?) {
-        val hmsEventName = eventsMap[name]
+        val hmsEventName = gmsToHmsEventMap[name]
         if (hmsEventName != null) {
             val newBundle = Bundle()
             bundle?.keySet()?.forEach { key ->
-                val hmsParamName = substitute(name, hmsEventName)
+                val hmsParamName = transformGmsToHmsParameters(name, hmsEventName)
                 if (hmsParamName != null) {
                     processParameter(bundle, newBundle, key, hmsParamName)
                 } else {
@@ -60,7 +55,19 @@ class HuaweiAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    override fun isApiAvailable(context: Context) = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
+    override fun name() = id
+
+    override fun isApiAvailable(context: Context): Boolean {
+        val instance = HuaweiApiAvailability.getInstance()
+        if (instance.isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS) {
+            val packageInfo = context.packageManager.getPackageInfo("com.huawei.hwid", 0)
+            if (packageInfo.versionCode > 40004000) { //longVersionCode для API Level 28
+                Log.e(TAG, "Old HMS Core detected, please update it to 5.x version")
+                return false
+            }
+        }
+        return instance.isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
+    }
 
     companion object {
         const val id = "HiAnalytics"

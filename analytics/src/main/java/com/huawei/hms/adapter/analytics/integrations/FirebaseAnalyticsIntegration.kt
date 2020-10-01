@@ -9,13 +9,10 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.huawei.hms.adapter.analytics.TAG
 
-class FirebaseAnalyticsIntegration : AnalyticsIntegration {
-
-    override val integrationId: String
-        get() = id
+internal class FirebaseAnalyticsIntegration : AnalyticsIntegration {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private var isStarted = false
+    override var isStarted = false
 
     override fun init(context: Context) {
         if (isApiAvailable(context)) {
@@ -28,7 +25,10 @@ class FirebaseAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    override fun isStarted() = isStarted
+
+    override fun name() = name
+
+    override fun isApiAvailable(context: Context) = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == com.google.android.gms.common.ConnectionResult.SUCCESS
 
     override fun logEvent(name: String, bundle: Bundle?) {
         firebaseAnalytics.logEvent(name, bundle)
@@ -42,9 +42,7 @@ class FirebaseAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    override fun isApiAvailable(context: Context) = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == com.google.android.gms.common.ConnectionResult.SUCCESS
-
     companion object {
-        const val id = "FirebaseAnalytics"
+        const val name = "FirebaseAnalytics"
     }
 }

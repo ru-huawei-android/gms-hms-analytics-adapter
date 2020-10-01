@@ -2,149 +2,160 @@ package com.huawei.hms.adapter.analytics.utils
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.huawei.hms.analytics.type.HAEventType
-import com.huawei.hms.analytics.type.HAParamType
+import com.huawei.hms.analytics.type.HAEventType.*
+import com.huawei.hms.analytics.type.HAParamType.*
 
 const val emptyParameter = "EMPTY"
 
-val eventsMap = mapOf(
-    FirebaseAnalytics.Event.ADD_PAYMENT_INFO to HAEventType.CREATEPAYMENTINFO,
-    FirebaseAnalytics.Event.ADD_TO_CART to HAEventType.ADDPRODUCT2CART,
-    FirebaseAnalytics.Event.ADD_TO_WISHLIST to HAEventType.ADDPRODUCT2WISHLIST,
-    FirebaseAnalytics.Event.PURCHASE to HAEventType.COMPLETEPURCHASE,
+val gmsToHmsEventMap = mapOf(
+    FirebaseAnalytics.Event.ADD_PAYMENT_INFO to CREATEPAYMENTINFO,
+    FirebaseAnalytics.Event.ADD_TO_CART to ADDPRODUCT2CART,
+    FirebaseAnalytics.Event.ADD_TO_WISHLIST to ADDPRODUCT2WISHLIST,
+    FirebaseAnalytics.Event.PURCHASE to COMPLETEPURCHASE,
 
     FirebaseAnalytics.Event.APP_OPEN to FirebaseAnalytics.Event.APP_OPEN,
 
-    FirebaseAnalytics.Event.LEVEL_START to HAEventType.STARTLEVEL,
-    FirebaseAnalytics.Event.LEVEL_END to HAEventType.COMPLETELEVEL,
-    FirebaseAnalytics.Event.LEVEL_UP to HAEventType.UPGRADELEVEL,
-    FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT to HAEventType.OBTAINACHIEVEMENT,
-    FirebaseAnalytics.Event.POST_SCORE to HAEventType.SUBMITSCORE,
+    FirebaseAnalytics.Event.LEVEL_START to STARTLEVEL,
+    FirebaseAnalytics.Event.LEVEL_END to COMPLETELEVEL,
+    FirebaseAnalytics.Event.LEVEL_UP to UPGRADELEVEL,
+    FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT to OBTAINACHIEVEMENT,
+    FirebaseAnalytics.Event.POST_SCORE to SUBMITSCORE,
 
-    FirebaseAnalytics.Event.EARN_VIRTUAL_CURRENCY to HAEventType.WINVIRTUALCOIN,
-    FirebaseAnalytics.Event.SPEND_VIRTUAL_CURRENCY to HAEventType.CONSUMEVIRTUALCOIN,
+    FirebaseAnalytics.Event.EARN_VIRTUAL_CURRENCY to WINVIRTUALCOIN,
+    FirebaseAnalytics.Event.SPEND_VIRTUAL_CURRENCY to CONSUMEVIRTUALCOIN,
 
-    FirebaseAnalytics.Event.LOGIN to HAEventType.SIGNIN,
-    FirebaseAnalytics.Event.SIGN_UP to HAEventType.REGISTERACCOUNT,
-    FirebaseAnalytics.Event.SHARE to HAEventType.SHARECONTENT,
-    FirebaseAnalytics.Event.JOIN_GROUP to HAEventType.JOINUSERGROUP,
+    FirebaseAnalytics.Event.LOGIN to SIGNIN,
+    FirebaseAnalytics.Event.SIGN_UP to REGISTERACCOUNT,
+    FirebaseAnalytics.Event.SHARE to SHARECONTENT,
+    FirebaseAnalytics.Event.JOIN_GROUP to JOINUSERGROUP,
 
-    FirebaseAnalytics.Event.BEGIN_CHECKOUT to HAEventType.STARTCHECKOUT,
-    FirebaseAnalytics.Event.CAMPAIGN_DETAILS to HAEventType.VIEWCAMPAIGN,
-    FirebaseAnalytics.Event.GENERATE_LEAD to HAEventType.OBTAINLEADS,
-    FirebaseAnalytics.Event.REMOVE_FROM_CART to HAEventType.DELPRODUCTFROMCART,
+    FirebaseAnalytics.Event.BEGIN_CHECKOUT to STARTCHECKOUT,
+    FirebaseAnalytics.Event.CAMPAIGN_DETAILS to VIEWCAMPAIGN,
+    FirebaseAnalytics.Event.GENERATE_LEAD to OBTAINLEADS,
+    FirebaseAnalytics.Event.REMOVE_FROM_CART to DELPRODUCTFROMCART,
 
-    FirebaseAnalytics.Event.TUTORIAL_BEGIN to HAEventType.STARTTUTORIAL,
-    FirebaseAnalytics.Event.TUTORIAL_COMPLETE to HAEventType.COMPLETETUTORIAL,
+    FirebaseAnalytics.Event.TUTORIAL_BEGIN to STARTTUTORIAL,
+    FirebaseAnalytics.Event.TUTORIAL_COMPLETE to COMPLETETUTORIAL,
 
-    FirebaseAnalytics.Event.VIEW_ITEM to HAEventType.VIEWPRODUCT,
-    FirebaseAnalytics.Event.VIEW_ITEM_LIST to HAEventType.VIEWPRODUCTLIST,
-    FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS to HAEventType.VIEWSEARCHRESULT,
+    FirebaseAnalytics.Event.VIEW_ITEM to VIEWPRODUCT,
+    FirebaseAnalytics.Event.VIEW_ITEM_LIST to VIEWPRODUCTLIST,
+    FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS to VIEWSEARCHRESULT,
 
-    FirebaseAnalytics.Event.SEARCH to HAEventType.SEARCH
+    FirebaseAnalytics.Event.SEARCH to SEARCH
 )
 
-val paramsMap = mapOf(
-    //CREATEPAYMENTINFO
-    FirebaseAnalytics.Param.PAYMENT_TYPE to HAParamType.PAYTYPE,
+val hmsToGmsParametersMap = mapOf(
+    /** CREATEPAYMENTINFO Section**/
+    FirebaseAnalytics.Param.PAYMENT_TYPE to PAYTYPE,
 
-    //ADDPRODUCT2CART, ADDPRODUCT2WISHLIST
-    FirebaseAnalytics.Param.CURRENCY to HAParamType.CURRNAME,
-    FirebaseAnalytics.Param.VALUE to HAParamType.PRICE,
-    FirebaseAnalytics.Param.ITEM_NAME to HAParamType.PRODUCTNAME,
+    /** ADDPRODUCT2CART, ADDPRODUCT2WISHLIST **/
+    FirebaseAnalytics.Param.CURRENCY to CURRNAME,
+    FirebaseAnalytics.Param.VALUE to PRICE,
+    FirebaseAnalytics.Param.ITEM_NAME to PRODUCTNAME,
 
-    //STARTLEVEL, COMPLETELEVEL
-    FirebaseAnalytics.Param.LEVEL_NAME to HAParamType.LEVELNAME,
+    /* STARTLEVEL, COMPLETELEVEL Section**/
+    FirebaseAnalytics.Param.LEVEL_NAME to LEVELNAME,
 
-    //COMPLETELEVEL
-    FirebaseAnalytics.Param.SUCCESS to HAParamType.RESULT,
+    /* COMPLETELEVEL Section**/
+    FirebaseAnalytics.Param.SUCCESS to RESULT,
 
-    //UPGRADELEVEL
-    FirebaseAnalytics.Param.LEVEL to HAParamType.LEVELID,
-    FirebaseAnalytics.Param.CHARACTER to HAParamType.ROLENAME,
+    /* UPGRADELEVEL Section**/
+    FirebaseAnalytics.Param.LEVEL to LEVELID,
+    FirebaseAnalytics.Param.CHARACTER to ROLENAME,
 
-    //OBTAINACHIEVEMENT
-    FirebaseAnalytics.Param.ACHIEVEMENT_ID to HAParamType.ACHIEVEMENTID,
-    FirebaseAnalytics.Param.ACHIEVEMENT_ID to HAParamType.ACHIEVEMENTID,
+    /* OBTAINACHIEVEMENT Section**/
+    FirebaseAnalytics.Param.ACHIEVEMENT_ID to ACHIEVEMENTID,
+    FirebaseAnalytics.Param.ACHIEVEMENT_ID to ACHIEVEMENTID,
 
-    //SUBMITSCORE
-    FirebaseAnalytics.Param.SCORE to HAParamType.SCORE,
+    /* SUBMITSCORE Section**/
+    FirebaseAnalytics.Param.SCORE to SCORE,
 
-    //WINVIRTUALCOIN, CONSUMEVIRTUALCOIN
-    FirebaseAnalytics.Param.VIRTUAL_CURRENCY_NAME to HAParamType.VIRTUALCURRNAME,
+    /* WINVIRTUALCOIN, CONSUMEVIRTUALCOIN Section**/
+    FirebaseAnalytics.Param.VIRTUAL_CURRENCY_NAME to VIRTUALCURRNAME,
 
-    //SHARE
-    FirebaseAnalytics.Param.CONTENT_TYPE to HAParamType.CONTENTTYPE,
-    FirebaseAnalytics.Param.ITEM_ID to HAParamType.PRODUCTID,
+    /* SHARE Section**/
+    FirebaseAnalytics.Param.CONTENT_TYPE to CONTENTTYPE,
+    FirebaseAnalytics.Param.ITEM_ID to PRODUCTID,
 
-    //JOINUSERGROUP
-    FirebaseAnalytics.Param.GROUP_ID to HAParamType.USERGROUPID,
+    /* JOINUSERGROUP Section**/
+    FirebaseAnalytics.Param.GROUP_ID to USERGROUPID,
 
-    //VIEWCAMPAIGN
-    FirebaseAnalytics.Param.MEDIUM to HAParamType.MEDIUM,
-    FirebaseAnalytics.Param.SOURCE to HAParamType.SOURCE,
-    FirebaseAnalytics.Param.CAMPAIGN to HAParamType.PROMOTIONNAME,
-    FirebaseAnalytics.Param.CONTENT to HAParamType.CONTENT,
-    FirebaseAnalytics.Param.TERM to HAParamType.KEYWORDS,
-    FirebaseAnalytics.Param.ACLID to HAParamType.CLICKID,
-    FirebaseAnalytics.Param.CP1 to HAParamType.EXTENDPARAM,
+    /* VIEWCAMPAIGN Section**/
+    FirebaseAnalytics.Param.MEDIUM to MEDIUM,
+    FirebaseAnalytics.Param.SOURCE to SOURCE,
+    FirebaseAnalytics.Param.CAMPAIGN to PROMOTIONNAME,
+    FirebaseAnalytics.Param.CONTENT to CONTENT,
+    FirebaseAnalytics.Param.TERM to KEYWORDS,
+    FirebaseAnalytics.Param.ACLID to CLICKID,
+    FirebaseAnalytics.Param.CP1 to EXTENDPARAM,
 
-    //VIEWSEARCHRESULT
-    FirebaseAnalytics.Param.SEARCH_TERM to HAParamType.SEARCHKEYWORDS,
+    /* VIEWSEARCHRESULT Section**/
+    FirebaseAnalytics.Param.SEARCH_TERM to SEARCHKEYWORDS,
 
-    //Common parameters
-    FirebaseAnalytics.Param.PRICE to HAParamType.PRICE,
-    FirebaseAnalytics.Param.QUANTITY to HAParamType.QUANTITY
+    /* COMMON Section**/
+    FirebaseAnalytics.Param.PRICE to PRICE,
+    FirebaseAnalytics.Param.QUANTITY to QUANTITY
 )
 
-fun substitute(hmsEventName: String, gmsParamName: String): String? {
+fun transformGmsToHmsParameters(hmsEventName: String, gmsParamName: String): String? {
     when (gmsParamName) {
         FirebaseAnalytics.Param.VALUE -> {
             when (hmsEventName) {
-                HAEventType.ADDPRODUCT2CART, HAEventType.ADDPRODUCT2WISHLIST -> return HAParamType.PRICE
-                HAEventType.WINVIRTUALCOIN, HAEventType.CONSUMEVIRTUALCOIN, HAEventType.COMPLETEPURCHASE -> return HAParamType.REVENUE
+                ADDPRODUCT2CART, ADDPRODUCT2WISHLIST -> return PRICE
+                WINVIRTUALCOIN, CONSUMEVIRTUALCOIN, COMPLETEPURCHASE -> return REVENUE
             }
         }
         FirebaseAnalytics.Param.METHOD ->
             when (hmsEventName) {
-                HAEventType.SIGNIN -> return HAParamType.CHANNEL
-                HAEventType.REGISTERACCOUNT -> return HAParamType.REGISTMETHOD
+                SIGNIN -> return CHANNEL
+                REGISTERACCOUNT -> return REGISTMETHOD
             }
     }
-    return paramsMap[gmsParamName]
+    return hmsToGmsParametersMap[gmsParamName]
 }
 
 fun addMandatoryParams(hmsEventName: String, bundle: Bundle) {
     when (hmsEventName) {
-        HAEventType.SIGNIN, HAEventType.REGISTERACCOUNT -> {
-            if (!bundle.containsKey(HAParamType.OCCURREDTIME)) {
-                bundle.putLong(HAParamType.OCCURREDTIME, System.currentTimeMillis())
+        SIGNIN, REGISTERACCOUNT -> {
+            if (!bundle.containsKey(OCCURREDTIME)) {
+                bundle.putLong(OCCURREDTIME, System.currentTimeMillis())
             }
         }
-        HAEventType.ADDPRODUCT2CART, HAEventType.ADDPRODUCT2WISHLIST -> {
-            if (!bundle.containsKey(HAParamType.PRODUCTID)) {
-                bundle.putString(HAParamType.PRODUCTID, emptyParameter)
+        ADDPRODUCT2CART, ADDPRODUCT2WISHLIST -> {
+            if (!bundle.containsKey(PRODUCTID)) {
+                bundle.putString(PRODUCTID, emptyParameter)
             }
-            if (!bundle.containsKey(HAParamType.PRODUCTNAME)) {
-                bundle.putString(HAParamType.PRODUCTNAME, emptyParameter)
-            }
-        }
-        HAEventType.VIEWPRODUCTLIST -> {
-            if (!bundle.containsKey(HAParamType.CATEGORY)) {
-                bundle.putString(HAParamType.CATEGORY, emptyParameter)
+            if (!bundle.containsKey(PRODUCTNAME)) {
+                bundle.putString(PRODUCTNAME, emptyParameter)
             }
         }
-
+        VIEWPRODUCTLIST -> {
+            if (!bundle.containsKey(CATEGORY)) {
+                bundle.putString(CATEGORY, emptyParameter)
+            }
+        }
     }
 }
 
 fun processParameter(bundle: Bundle, newBundle: Bundle, key: String?, newKey: String?) {
     when (val value = bundle.get(key)) {
-        is Int -> newBundle.putInt(newKey, value)
-        is Long -> newBundle.putLong(newKey, value)
-        is String -> newBundle.putString(newKey, value)
         is Byte -> newBundle.putByte(newKey, value)
         is Char -> newBundle.putChar(newKey, value)
+        is Short -> newBundle.putShort(newKey, value)
+        is Int -> newBundle.putInt(newKey, value)
+        is Long -> newBundle.putLong(newKey, value)
+        is Float -> newBundle.putFloat(newKey, value)
+        is Double -> newBundle.putDouble(newKey, value)
+        is String -> newBundle.putString(newKey, value)
         is Boolean -> newBundle.putBoolean(newKey, value)
+
+        is ByteArray -> newBundle.putByteArray(newKey, value)
+        is CharArray -> newBundle.putCharArray(newKey, value)
+        is ShortArray -> newBundle.putShortArray(newKey, value)
+        is IntArray -> newBundle.putIntArray(newKey, value)
+        is LongArray -> newBundle.putLongArray(newKey, value)
+        is FloatArray -> newBundle.putFloatArray(newKey, value)
+        is DoubleArray -> newBundle.putDoubleArray(newKey, value)
+        is BooleanArray -> newBundle.putBooleanArray(newKey, value)
     }
 }

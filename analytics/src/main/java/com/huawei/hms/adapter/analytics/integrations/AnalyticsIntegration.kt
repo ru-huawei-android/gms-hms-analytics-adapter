@@ -3,15 +3,14 @@ package com.huawei.hms.adapter.analytics.integrations
 import android.content.Context
 import android.os.Bundle
 
-interface AnalyticsIntegration {
-
-    val integrationId: String
-    fun getId(): String = integrationId
+internal interface AnalyticsIntegration {
+    var isStarted: Boolean
 
     fun init(context: Context)
-    fun isApiAvailable(context: Context): Boolean
 
-    fun isStarted(): Boolean
+    fun isApiAvailable(context: Context): Boolean
     fun logEvent(name: String, bundle: Bundle?)
     fun onUserProfile(name: String, value: String)
+
+    fun name() : String
 }
