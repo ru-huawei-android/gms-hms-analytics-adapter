@@ -11,32 +11,26 @@ For example to use Firebase and Huawei analytics in one project without Analytic
 5. Use different methods for Google and Huawei events and user properties
 
 In case of Analytics Adapter usage you only have to do only two strings of code: 
-*ComposedAnalytics.init(this@MainActivity)
-ComposedAnalytics.onEvent("Cool event", bundle)*
+*val composedAnalytics = ComposedAnalytics(this@MainActivity)
+composedAnalytics.onEvent("Cool event", bundle)*
 
 **You could also send Firebase dependent built-in events, the library automatically translate it to appropriate HA analogue**
 e.g. FirebaseAnalytics.Event.ADD_PAYMENT_INFO becomes HAEventType.CREATEPAYMENTINFO
 
-**Library automatically detects avalable analytics API on device, initializes it and send events and profile to both GA and HA**
+**Library automatically detects available analytics API on device, initializes it and send events and profile to both GA and HA**
 
 Signatures:
 
-*fun init(context: Context, APIs: Set<String> = getSupportedAPIs())*
+*fun getIntegrations(): Set<String>*
 
-*fun getSupportedAPIs(): Set<String>*
+Available analytics integrations list detected on ComposedAnalytics object initialization
 
-Implemented analytics integrations static set (FirebaseAnalytics and HuaweiAnalytics by now)
-
-*fun getDeviceAPIs(): Set<String>*
-
-Set of on-device (emulator) services available for interaction (depends on GMS/HMS presents on device)
-
-*fun onEvent(eventName: String, bundle: Bundle?, APIs: Set<String> = getDeviceAPIs())*
+*fun onEvent(eventName: String, bundle: Bundle?)*
 
 Custom/Build-in event sending to available analytics. 
 Third parameter is optional, in case developer doesn't use it, it filled with available integration ids.
 
-*fun setUserProperty(name: String, value: String, APIs: Set<String> = getDeviceAPIs())*
+*fun setUserProperty(name: String, value: String)*
 
 UserProfile/UserProperty setting. 
 Third parameter is optional, in case developer doesn't use it, it filled with available integration ids.

@@ -14,9 +14,9 @@ class AnalyticsActivity : AppCompatActivity() {
 
         val composedAnalytics = ComposedAnalytics(this@AnalyticsActivity)
 
-        val availableSDKs = composedAnalytics.getIntegrations()
+        val integrations = composedAnalytics.getIntegrations()
 
-        integrationsList.text = getString(R.string.available_analytics_sdks, availableSDKs)
+        integrationsList.text = getString(R.string.available_analytics_sdks, integrations)
 
         customEvent.setOnClickListener {
             val bundle = Bundle().apply {
