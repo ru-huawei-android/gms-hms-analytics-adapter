@@ -3,7 +3,6 @@ package com.huawei.hms.adapter.analytics.integrations
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.huawei.hms.adapter.analytics.TAG
 import com.huawei.hms.adapter.analytics.utils.*
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
@@ -55,7 +54,7 @@ internal class HuaweiAnalyticsIntegration : AnalyticsIntegration {
         }
     }
 
-    override fun name() = id
+    override fun name() = name
 
     override fun isApiAvailable(context: Context): Boolean {
         val instance = HuaweiApiAvailability.getInstance()
@@ -70,7 +69,8 @@ internal class HuaweiAnalyticsIntegration : AnalyticsIntegration {
     }
 
     companion object {
-        const val id = "HiAnalytics"
+        const val TAG = "HiAnalytics"
+        const val name = "Huawei Analytics"
     }
 
 }

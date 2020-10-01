@@ -7,7 +7,6 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.huawei.hms.adapter.analytics.TAG
 
 internal class FirebaseAnalyticsIntegration : AnalyticsIntegration {
 
@@ -43,6 +42,7 @@ internal class FirebaseAnalyticsIntegration : AnalyticsIntegration {
     }
 
     companion object {
-        const val name = "FirebaseAnalytics"
+        const val TAG = "Firebase"
+        const val name = "Firebase Analytics"
     }
 }
