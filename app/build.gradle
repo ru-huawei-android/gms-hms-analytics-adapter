@@ -27,7 +27,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('wallet_keystore.jks')
+            storeFile file('keystore.jks')
             keyAlias 'key0'
             keyPassword 'KeyPassword'
             storePassword 'WalletPassword'
